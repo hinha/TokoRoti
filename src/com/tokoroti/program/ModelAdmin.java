@@ -17,6 +17,12 @@ import java.util.logging.Logger;
 public class ModelAdmin {
     private String username;
     private String password;
+    private String nama;
+    private String alamat;
+    private String gender;
+    private String email;
+    private String noTelp;
+    
     
     KoneksiDB kon = new KoneksiDB();
     
@@ -26,6 +32,14 @@ public class ModelAdmin {
     public ModelAdmin(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public ModelAdmin(String nama, String alamat, String gender, String email, String noTelp) {
+        this.nama = nama;
+        this.alamat = alamat;
+        this.gender = gender;
+        this.email = email;
+        this.noTelp = noTelp;
     }
 
     
@@ -53,12 +67,52 @@ public class ModelAdmin {
         return password;
     }
 
+    public String getNama() {
+        return nama;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNoTelp() {
+        return noTelp;
+    }
+    
     public void setUsername(String username) {
         this.username = username;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setNoTelp(String noTelp) {
+        this.noTelp = noTelp;
     }
     
 }

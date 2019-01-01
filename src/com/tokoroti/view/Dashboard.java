@@ -23,7 +23,7 @@ public class Dashboard extends javax.swing.JFrame {
     /** Creates new form dasboard */
     public Dashboard() {
         initComponents();
-        showData();
+//        showData();
     }
     
     public Dashboard(String usr) {
@@ -32,28 +32,28 @@ public class Dashboard extends javax.swing.JFrame {
         lblUser.setText("Haii " + usr.toUpperCase());
     }
     
-    public void showData() {
-        DefaultTableModel modelData = new DefaultTableModel();
-        modelData.addColumn("Nama Produk");
-        modelData.addColumn("Jenis");
-        modelData.addColumn("Harga");
-        modelData.addColumn("Stok");
-        table_produk.setModel(modelData);
-        System.out.println("Ok");
-        try {
-            kon.res = kon.stat.executeQuery("SELECT nama_produk, jenis, harga, stok FROM produk");
-            while(kon.res.next()){  
-                modelData.addRow(new Object[]{
-                    kon.res.getString(1),
-                    kon.res.getString(2),
-                    kon.res.getInt(3),
-                    kon.res.getInt(4) 
-                });
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void showData() {
+//        DefaultTableModel modelData = new DefaultTableModel();
+//        modelData.addColumn("Nama Produk");
+//        modelData.addColumn("Jenis");
+//        modelData.addColumn("Harga");
+//        modelData.addColumn("Stok");
+//        table_produk.setModel(modelData);
+//        System.out.println("Ok");
+//        try {
+//            kon.res = kon.stat.executeQuery("SELECT nama_produk, jenis, harga, stok FROM produk");
+//            while(kon.res.next()){  
+//                modelData.addRow(new Object[]{
+//                    kon.res.getString(1),
+//                    kon.res.getString(2),
+//                    kon.res.getInt(3),
+//                    kon.res.getInt(4) 
+//                });
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -65,15 +65,13 @@ public class Dashboard extends javax.swing.JFrame {
 
         selamat_datang = new javax.swing.JLabel();
         btn_keranjang = new javax.swing.JButton();
-        btn_transaksi = new javax.swing.JButton();
-        btn_update = new javax.swing.JButton();
+        btnProduk = new javax.swing.JButton();
         btn_keluar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_produk = new javax.swing.JTable();
-        daftar_produk = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
+        btnAnggota = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         selamat_datang.setFont(new java.awt.Font("Perpetua Titling MT", 1, 18)); // NOI18N
         selamat_datang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -86,17 +84,10 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        btn_transaksi.setText("TRANSAKSI");
-        btn_transaksi.addActionListener(new java.awt.event.ActionListener() {
+        btnProduk.setText("PRODUK");
+        btnProduk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_transaksiActionPerformed(evt);
-            }
-        });
-
-        btn_update.setText("UPDATE DATA ");
-        btn_update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_updateActionPerformed(evt);
+                btnProdukActionPerformed(evt);
             }
         });
 
@@ -107,44 +98,38 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        table_produk.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nama Produk", "Jenis", "Harga", "Stok"
-            }
-        ));
-        jScrollPane1.setViewportView(table_produk);
-
-        daftar_produk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        daftar_produk.setText("DAFTAR PRODUK");
-
         lblUser.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        btnAnggota.setText("PELANGGAN");
+        btnAnggota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnggotaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(selamat_datang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)))
+                            .addComponent(selamat_datang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_keranjang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_keluar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(daftar_produk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_keluar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_keranjang, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -154,23 +139,18 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(selamat_datang, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUser)
-                .addGap(47, 47, 47)
-                .addComponent(daftar_produk)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_keranjang, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_keluar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(99, 99, 99)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_keranjang, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_keluar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_keranjangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_keranjangActionPerformed
@@ -179,21 +159,21 @@ public class Dashboard extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_keranjangActionPerformed
 
-    private void btn_transaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transaksiActionPerformed
-        Transaksi transaksi = new Transaksi();
-        transaksi.setVisible(true);
+    private void btnProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdukActionPerformed
+        TambahProduk produk = new TambahProduk();
+        produk.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btn_transaksiActionPerformed
-
-    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        UpdateData updateData = new UpdateData();
-        updateData.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btn_updateActionPerformed
+    }//GEN-LAST:event_btnProdukActionPerformed
 
     private void btn_keluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_keluarActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btn_keluarActionPerformed
+
+    private void btnAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnggotaActionPerformed
+        Pelanggan pelanggan = new Pelanggan();
+        pelanggan.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAnggotaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,15 +212,12 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnggota;
+    private javax.swing.JButton btnProduk;
     private javax.swing.JButton btn_keluar;
     private javax.swing.JButton btn_keranjang;
-    private javax.swing.JButton btn_transaksi;
-    private javax.swing.JButton btn_update;
-    private javax.swing.JLabel daftar_produk;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblUser;
     private javax.swing.JLabel selamat_datang;
-    private javax.swing.JTable table_produk;
     // End of variables declaration//GEN-END:variables
 
 }
