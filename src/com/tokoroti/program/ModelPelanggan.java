@@ -72,5 +72,23 @@ public class ModelPelanggan extends ModelAdmin{
         }
         return false;
     }
+    public boolean editPelanggan(int id) {
+        
+        try {
+            String sql = "SELECT nama, alamat, gender, email, no_hp FROM pelanggan WHERE id_pelanggan=" + id;
+            kon.res = kon.stat.executeQuery(sql);
+            if (kon.res.next()) {
+                setNama(kon.res.getString(1));
+                setAlamat(kon.res.getString(2));
+                setGender(kon.res.getString(3));
+                setEmail(kon.res.getString(4));
+                setNoTelp(kon.res.getString(5));
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ModelPelanggan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     
 }

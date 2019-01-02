@@ -7,6 +7,7 @@
 package com.tokoroti.view;
 
 import com.tokoroti.program.KoneksiDB;
+import com.tokoroti.program.ModelPelanggan;
 import com.tokoroti.program.ModelProduk;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,6 +24,8 @@ public class TambahProduk extends javax.swing.JFrame {
     ModelProduk modelProduk;
     KoneksiDB kon = new KoneksiDB();
     
+    int ID = 0;
+    
     public TambahProduk() {
         initComponents();
         showData();
@@ -30,19 +33,21 @@ public class TambahProduk extends javax.swing.JFrame {
     
     public void showData() {
         DefaultTableModel modelData = new DefaultTableModel();
+        modelData.addColumn("No");
         modelData.addColumn("Nama Produk");
         modelData.addColumn("Jenis");
         modelData.addColumn("Harga");
         modelData.addColumn("Stok");
         tblProduk.setModel(modelData);
         try {
-            kon.res = kon.stat.executeQuery("SELECT nama_produk, jenis, harga, stok FROM produk");
+            kon.res = kon.stat.executeQuery("SELECT * FROM produk");
             while(kon.res.next()){  
                 modelData.addRow(new Object[]{
-                    kon.res.getString(1),
+                    kon.res.getInt(1),
                     kon.res.getString(2),
-                    kon.res.getInt(3),
-                    kon.res.getInt(4) 
+                    kon.res.getString(3),
+                    kon.res.getInt(4),
+                    kon.res.getInt(5) 
                 });
             }
         } catch (SQLException ex) {
@@ -72,6 +77,7 @@ public class TambahProduk extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
         btnTambah = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -97,9 +103,14 @@ public class TambahProduk extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nama", "Jenis", "Harga", "Stok"
+                "No", "Nama", "Jenis", "Harga", "Stok"
             }
         ));
+        tblProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProdukMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProduk);
 
         btnBack.setText("Kembali");
@@ -110,11 +121,23 @@ public class TambahProduk extends javax.swing.JFrame {
         });
 
         btnBatal.setText("Batal");
+        btnBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBatalActionPerformed(evt);
+            }
+        });
 
         btnTambah.setText("Tambah");
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTambahActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -152,12 +175,14 @@ public class TambahProduk extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnBack)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnUpdate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnTambah)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBatal)
                                 .addGap(18, 18, 18)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 6, Short.MAX_VALUE)))
+                        .addGap(0, 1, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -187,7 +212,8 @@ public class TambahProduk extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -209,6 +235,10 @@ public class TambahProduk extends javax.swing.JFrame {
             if (modelProduk.insertProduk()) {
                 showData();
                 JOptionPane.showMessageDialog(this, "Berhasil Ditambahkan");
+                txtProduk.setText("");
+                txtJenis.setText("");
+                txtHarga.setText("");
+                txtJumlah.setText("");
             }
             
         }
@@ -219,6 +249,41 @@ public class TambahProduk extends javax.swing.JFrame {
         dashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+         int edit = JOptionPane.showConfirmDialog(null, "Sudah benar ?" ,"Oke", 
+                JOptionPane.YES_NO_OPTION);
+        if (edit == JOptionPane.YES_OPTION) {
+            modelProduk = new ModelProduk(txtProduk.getText(), txtJenis.getText(), Integer.parseInt(txtHarga.getText()), Integer.parseInt(txtJumlah.getText()));
+            if (modelProduk.updatePelanggan(ID)) {
+                showData();
+                JOptionPane.showMessageDialog(null, "Data Berhasil Di Edit");
+                txtProduk.setText("");
+                txtJenis.setText("");
+                txtHarga.setText("");
+                txtJumlah.setText("");
+            }
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void tblProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdukMouseClicked
+        int row = tblProduk.getSelectedRow();
+        ID = Integer.parseInt(tblProduk.getModel().getValueAt(row, 0).toString());
+        modelProduk = new ModelProduk();
+        if (modelProduk.editPelanggan(ID)) {
+            txtProduk.setText(modelProduk.getNamaProduk());
+            txtJenis.setText(modelProduk.getJenis());
+            txtHarga.setText(String.valueOf(modelProduk.getHarga()));
+            txtJumlah.setText(String.valueOf(modelProduk.getStok()));
+        }
+    }//GEN-LAST:event_tblProdukMouseClicked
+
+    private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
+        txtProduk.setText("");
+        txtJenis.setText("");
+        txtHarga.setText("");
+        txtJumlah.setText("");
+    }//GEN-LAST:event_btnBatalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,6 +324,7 @@ public class TambahProduk extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBatal;
     private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblHarga;
     private javax.swing.JLabel lblHarga1;

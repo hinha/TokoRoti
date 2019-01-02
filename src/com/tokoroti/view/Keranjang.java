@@ -201,6 +201,12 @@ public class Keranjang extends javax.swing.JFrame {
 
         lblTGL.setText("jLabel3");
 
+        jcmbAnggota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcmbAnggotaActionPerformed(evt);
+            }
+        });
+
         jumlah_pemesanan1.setText("Produk");
 
         jumlah_pemesanan.setText("Jumlah");
@@ -504,6 +510,10 @@ public class Keranjang extends javax.swing.JFrame {
         int row = tblData.getSelectedRow();
         ID = Integer.parseInt(tblData.getModel().getValueAt(row, 0).toString());
     }//GEN-LAST:event_tblDataMouseClicked
+
+    private void jcmbAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmbAnggotaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcmbAnggotaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -35,7 +35,7 @@ public class Pelanggan extends javax.swing.JFrame {
         detailAdmin();
         
     }
-
+    
     public void detailAdmin() {
         DefaultTableModel modelDataAdmin = new DefaultTableModel();
         modelDataAdmin.addColumn("ID");
@@ -248,6 +248,7 @@ public class Pelanggan extends javax.swing.JFrame {
                 "ID", "Nama", "JK", "Email", "Alamat", "NoTelp"
             }
         ));
+        tblPelanggan.setRowSelectionAllowed(false);
         tblPelanggan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblPelangganMouseClicked(evt);
@@ -366,6 +367,10 @@ public class Pelanggan extends javax.swing.JFrame {
             if (modelPelanggan.insertPelanggan()) {
                 detailPelanggan();
                 JOptionPane.showMessageDialog(this, "Tambah Pelanggan Berhasil");
+                txtNama.setText("");
+                txtAlamat.setText("");
+                txtEmail.setText("");
+                txtNoTel.setText("");
             }
         }
     }//GEN-LAST:event_btnTambahActionPerformed
@@ -386,6 +391,12 @@ public class Pelanggan extends javax.swing.JFrame {
     private void tblPelangganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPelangganMouseClicked
         int row = tblPelanggan.getSelectedRow();
         ID = Integer.parseInt(tblPelanggan.getModel().getValueAt(row, 0).toString());
+        modelPelanggan = new ModelPelanggan();
+        modelPelanggan.editPelanggan(ID);
+        txtNama.setText(modelPelanggan.getNama());
+        txtAlamat.setText(modelPelanggan.getAlamat());
+        txtEmail.setText(modelPelanggan.getEmail());
+        txtNoTel.setText(modelPelanggan.getNoTelp());
     }//GEN-LAST:event_tblPelangganMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -401,6 +412,10 @@ public class Pelanggan extends javax.swing.JFrame {
             if (modelPelanggan.updatePelanggan(ID)) {
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di Edit");
                 detailPelanggan();
+                txtNama.setText("");
+                txtAlamat.setText("");
+                txtEmail.setText("");
+                txtNoTel.setText("");
             }
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -409,6 +424,10 @@ public class Pelanggan extends javax.swing.JFrame {
         modelPelanggan = new ModelPelanggan();
         if (modelPelanggan.deleteKeranjang(ID)) {
             detailPelanggan();
+            txtNama.setText("");
+            txtAlamat.setText("");
+            txtEmail.setText("");
+            txtNoTel.setText("");
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 
