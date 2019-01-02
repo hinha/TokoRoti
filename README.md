@@ -1,4 +1,4 @@
-Sebuah aplikasi TokoRoti
+Sebuah aplikasi TokoRoti.
 Aplikasi ini dibuat  demi memenuhi Mata kuliah Pemrograman Beorientasi Objek - Praktik
 
 
